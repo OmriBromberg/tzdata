@@ -409,6 +409,11 @@ def update_news(news_entry: NewsEntry):
         f.write("\n\n---\n\n".join(news_fragments))
 
 
+def inject_ramat_hasharon(tzdb_location: pathlib.Path):
+    with open(tzdb_location / "asia", "a") as f:
+        with open(pathlib.Path(__file__).parent / "Ramat_HaSharon", "r") as fr:
+            f.write(fr.read())
+
 @click.command()
 @click.option(
     "--version", "-v", default=None, help="The version of the tzdata file to download"
@@ -452,6 +457,7 @@ def main(
     # Update the news entry
     news_entry = read_news(tzdb_location, version=version)
     update_news(news_entry)
+    inject_ramat_hasharon(tzdb_location)
 
     if not news_only:
         zonenames, zonefile_path = load_zonefiles(tzdb_location)

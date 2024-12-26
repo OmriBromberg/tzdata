@@ -25,3 +25,5 @@ tmp/
 
 venv/
 .venv/
+
+.idea
